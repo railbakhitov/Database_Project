@@ -1,7 +1,9 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import { connect } from 'react-redux';
-import getJSON from "./test/test";
+import loadTestData from './redux/actions/loadTestData';
+import LeftMenu from './components/LeftMenu/LeftMenu';
+import Person from './components/PersonData/Person';
 
 class App extends React.Component {
     constructor(props) {
@@ -10,7 +12,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-
+        this.props.init();
 
     }
 
@@ -19,10 +21,10 @@ class App extends React.Component {
     }
 
     render() {
-        const text=fetch('https://api.myjson.com/bins/nla64').json();
         return (
-            <div>
-                <pre>{JSON.stringify(text, null, '\t')}</pre>
+            <div className="wrapper">
+                <LeftMenu />
+                <Person />
             </div>
     );
     }
@@ -34,7 +36,11 @@ function msp(state) {
 
 
 function mdp(dispatch) {
-
+    return {
+        init() {
+            dispatch(loadTestData())
+        }
+    }
 }
 
 export default connect(msp, mdp)(App);

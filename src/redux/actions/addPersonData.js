@@ -11,7 +11,9 @@ function addPersonData(personData) {
             university: personData.university,
             department: personData.department,
             status: personData.status,
-            dateRegistration: personData.registration
+            dateRegistration: personData.dateRegistration
         }
     }
 }
+
+export default addPersonData;

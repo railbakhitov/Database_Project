@@ -1,0 +1,11 @@
+.person {
+    background-color: mintcream;
+    font-size: 25px;
+    padding-left: 20px;
+    border: 2px solid black;
+    border-left: 0;
+
+    &__header {
+        margin-top: 20px;
+    }
+}

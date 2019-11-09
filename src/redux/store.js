@@ -10,7 +10,8 @@ reduxMiddlewares.push(thunk);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-    participant: []
+    participantList: [],
+    personData: [],
 }
 
 let store = createStore(index, initialState, composeEnhancers(applyMiddleware(...reduxMiddlewares)));
