@@ -1,17 +1,27 @@
 import React from 'react';
 
-const ListParticipant = ( props ) => {
+const ListParticipant = (props) => {
+     
+
+    const { participantList } = props;
+    console.log(participantList)
+/*
+    const namesRender = participantList.map((name, index) => (
+        <div key={index}>
+            <a href="#">{name}</a>
+        </div>
+    ));
+
     return (
         <div className="leftMenu__nav">
-            <div>
-                <a href="#">Бахитов Р.С</a>
-            </div>
-            <div>
-                <a href="#">Фатыков М.З.</a>
-            </div>
-
+            {namesRender}
         </div>
-    );
+    ); */
+        return (
+            <div>
+                Фамилия И.О.
+            </div>
+        )
 };
 
 export default ListParticipant;

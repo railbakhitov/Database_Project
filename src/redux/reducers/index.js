@@ -2,13 +2,14 @@ import createFullName from "../../utils/createFullName";
 
 function index(state = {}, action = {}) {
     const { payload } = action;
+    
     console.log('action', action);
 
     switch (action.type) {
         case 'ADD_PERSON_DATA': {
             const { firstName, lastName, middleName } = payload;
             const fullName = createFullName(firstName, lastName, middleName);
-            console.log(' payload this => ', payload);
+
             return  { 
                 ...state, 
                 participantList: [ ...state.participantList, fullName ], 
@@ -16,12 +17,20 @@ function index(state = {}, action = {}) {
             };
         }
         case 'ADD_INPUT_DATA': {
-            const { participantList, personData } = payload;
-            return { 
-                ...state, 
-                participantList,
-                personData
-            };
+            const ids  = Object.keys(payload);
+
+            const newState = ids.reduce((acc, id) => {
+                const personDataOfCurrentId = payload[id];
+                const { firstName, lastName, middleName } = personDataOfCurrentId;
+                const fullName = createFullName(firstName, lastName, middleName);
+                return {
+                    ...acc,
+                    participantList: [ ...acc.participantList, fullName ], 
+                    personData: [ ...acc.personData, personDataOfCurrentId ]
+                }
+            }, state);
+
+            return newState
         }
         default:
             return state;

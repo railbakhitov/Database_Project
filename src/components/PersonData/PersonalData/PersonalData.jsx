@@ -3,6 +3,7 @@ import formatDate from '../../../utils/formatDate';
 import { DocGrid, Row, Col } from '../../../partials/DocGrid';
 import store from '../../../redux/store';
 import addPersonData from '../../../redux/actions/addPersonData';
+import axios from 'axios';
 
 class PersonalData extends React.Component {
     constructor(props) {
@@ -92,6 +93,7 @@ class PersonalData extends React.Component {
     }
 
     dispatchData() {
+        axios.post('https://database-knrtu.firebaseio.com/data.json', this.state )
         store.dispatch(addPersonData(this.state));
     }    
 

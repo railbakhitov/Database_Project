@@ -1,11 +1,11 @@
+import axios from 'axios';
+
 function loadTestData() {
     return function(dispatch, getState) {
-        fetch('https://api.myjson.com/bins/cye2c')
+        axios.get('https://database-knrtu.firebaseio.com/data.json')
             .then(function(response) {
-                return response.json();
-            })
-            .then(function(state) {
-                dispatch({ type: 'ADD_INPUT_DATA', payload: state });
+                console.log('response', response.data)
+                dispatch({ type: 'ADD_INPUT_DATA', payload: response.data });
             });
     };
 };
