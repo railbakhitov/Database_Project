@@ -41,7 +41,7 @@ function index(state = {}, action = {}) {
             return { ...state, searchParticipant: payload};
 
         case 'CURRENT_PARTICIPANT':
-            return { ...state, cuurentParticipant: payload};
+            return { ...state, currentParticipant: payload};
         
         default:
             return state;

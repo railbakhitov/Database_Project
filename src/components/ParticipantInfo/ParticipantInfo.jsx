@@ -15,7 +15,10 @@ class ParticipantInfo extends React.Component {
 
     render() {
         const { currentID, data } = this.props;
-        const personData = data[currentID];
+        // TODO: упросить запись снизу
+        let personData = data.filter(person => Object.keys(person).join() === currentID);
+            personData = personData.slice().shift();
+            personData = Object.values(personData).slice().shift();
 
         return (
             <form className="person" onSubmit={ this.handleSubmit }>
@@ -93,9 +96,11 @@ class ParticipantInfo extends React.Component {
 };
 
 function msp(state) {
+    const {personData, currentParticipant} = state;
+    console.log(personData, currentParticipant);
     return {
-        'data': state.personData,
-        'currentID': state.currentPatricipant
+        'data': personData,
+        'currentID': currentParticipant
     }
 }
 

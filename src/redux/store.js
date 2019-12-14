@@ -2,7 +2,7 @@
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import index  from './reducers';
+import reducer  from './reducers';
 
 let reduxMiddlewares = [];
 reduxMiddlewares.push(thunk);
@@ -13,9 +13,9 @@ const initialState = {
     participantList: [],
     personData: [],
     searchParticipant: null,
-    cuurentParticipant: null,
+    currentParticipant: null,
 }
 
-let store = createStore(index, initialState, composeEnhancers(applyMiddleware(...reduxMiddlewares)));
+let store = createStore(reducer, initialState, composeEnhancers(applyMiddleware(...reduxMiddlewares)));
 
 export default store;

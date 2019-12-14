@@ -23,12 +23,13 @@ class App extends React.Component {
     }
 
     render() {
+        console.log('gjdfng', this.props.currentID);
         return (
             <div className="wrapper">
                 <LeftMenu />
                     <Switch>
                         <Route path={'/'} exact component={Person} />
-                        <Route path={`${this.props.currentID}`} component={ParticipantInfo} />
+                        <Route path={`/${this.props.currentID}`} component={ParticipantInfo} />
                     </Switch>
             </div>
     );
