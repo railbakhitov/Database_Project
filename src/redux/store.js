@@ -12,6 +12,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const initialState = {
     participantList: [],
     personData: [],
+    searchParticipant: null,
+    cuurentParticipant: null,
 }
 
 let store = createStore(index, initialState, composeEnhancers(applyMiddleware(...reduxMiddlewares)));

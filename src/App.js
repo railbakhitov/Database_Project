@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import loadTestData from './redux/actions/loadTestData';
 import LeftMenu from './components/LeftMenu/LeftMenu';
 import Person from './components/PersonData/Person';
+import { Route, Switch } from 'react-router-dom';
+import ParticipantInfo from './components/ParticipantInfo/ParticipantInfo';
 
 class App extends React.Component {
     constructor(props) {
@@ -24,16 +26,20 @@ class App extends React.Component {
         return (
             <div className="wrapper">
                 <LeftMenu />
-                <Person />
+                    <Switch>
+                        <Route path={'/'} exact component={Person} />
+                        <Route path={`${this.props.currentID}`} component={ParticipantInfo} />
+                    </Switch>
             </div>
     );
     }
 }
 
 function msp(state) {
-
+    return {
+        'currentID': state.currentParticipant 
+    }
 }
-
 
 function mdp(dispatch) {
     return {

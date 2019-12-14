@@ -1,27 +1,64 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import store from '../../../redux/store';
 
-const ListParticipant = (props) => {
-     
+class ListParticipant extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleClickOnRef = this.handleClickOnRef.bind(this);
+    }
 
-    const { participantList } = props;
-    console.log(participantList)
-/*
-    const namesRender = participantList.map((name, index) => (
-        <div key={index}>
-            <a href="#">{name}</a>
-        </div>
-    ));
+    handleClickOnRef(e) {
+        const id= e.target.name;
+        store.dispatch({ type: 'CURRENT_PARTICIPANT', payload: id });
+    }
 
-    return (
-        <div className="leftMenu__nav">
-            {namesRender}
-        </div>
-    ); */
+    render() {
+
+        const { names, ids, search } = this.props;
+        const namesRender = names.map((name, index) => {
+
+            const lastName = name.split(' ')[0];
+            const renderElement = (
+                <div key={index}>
+                    <NavLink
+                        to={`/${ids[index]}`}
+                        onClick={this.handleClickOnRef}
+                        name={`${ids[index]}`}
+                    >
+                        {name}
+                    </NavLink>
+                </div>
+            )
+
+            if (search === null) {
+                return renderElement;
+            }
+
+            if (lastName === search) {
+                return renderElement
+            }
+        });
+
         return (
-            <div>
-                Фамилия И.О.
+            <div className="leftMenu__nav">
+                <span style={{ fontWeight: 'bold' }}>Список участников:</span>
+                {namesRender}
             </div>
         )
+    }
 };
 
-export default ListParticipant;
+function msp(state) {
+    const { participantList, personData, searchParticipant } = state;
+    const idsList = personData.map(person => Object.keys(person).join());
+
+    return {
+        'names': participantList,
+        'ids': idsList,
+        'search': searchParticipant
+    }
+}
+
+export default connect(msp)(ListParticipant);

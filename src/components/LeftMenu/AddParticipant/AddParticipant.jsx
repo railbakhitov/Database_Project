@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 class AddParticipant extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class AddParticipant extends React.Component {
     render() {
         return (
             <div className="leftMenu__button">
-                <a>Добавить участника</a>
+                <NavLink to='/'>Добавить участника</NavLink>
             </div>
         );
     }
