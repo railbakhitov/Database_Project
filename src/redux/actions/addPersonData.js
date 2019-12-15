@@ -4,6 +4,7 @@ function addPersonData(personData) {
         payload: {
             dateRegistration: personData.dateRegistration,
             department: personData.department,
+            direction: personData.direction,
             email: personData.email,
             firstName: personData.firstName,
             lastName: personData.lastName,
@@ -11,7 +12,7 @@ function addPersonData(personData) {
             position: personData.position,
             status: personData.status,
             telephone: personData.telephone,
-            university: personData.university,
+            university: personData.university
         }
     }
 }

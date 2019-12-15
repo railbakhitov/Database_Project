@@ -1,5 +1,6 @@
 import '../PersonData/Person.scss';
 import React from 'react';
+import Select from 'react-select';
 import { DocGrid, Row, Col } from '../../partials/DocGrid';
 import { connect } from 'react-redux';
 
@@ -88,6 +89,19 @@ class ParticipantInfo extends React.Component {
                             <input type="text" value={ personData.status } name="status" /> 
                         </Col>
                     </Row>  
+                </DocGrid>
+
+                <DocGrid cols={1}>
+                    <Row>
+                        <Col>
+                            <Select 
+                                name="select-direction"
+                                /* options={options}  */
+                                className="person__select"
+                                value={ personData.direction }
+                            />
+                        </Col>
+                    </Row>
                 </DocGrid>
 
             </form>

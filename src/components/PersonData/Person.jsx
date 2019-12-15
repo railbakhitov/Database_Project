@@ -4,7 +4,10 @@ import formatDate from '../../utils/formatDate';
 import { DocGrid, Row, Col } from '../../partials/DocGrid';
 import store from '../../redux/store';
 import addPersonData from '../../redux/actions/addPersonData';
+import Select from 'react-select';
 import axios from 'axios';
+import ProgramUMNIK from './Directions/ProgramUMNIK';
+import FiftyIdeas from './Directions/FiftyIdeas';
 
 class PersonalData extends React.Component {
     constructor(props) {
@@ -19,7 +22,8 @@ class PersonalData extends React.Component {
             university: '',
             department: '',
             status: '',
-            dateRegistration: formatDate(new Date())
+            dateRegistration: formatDate(new Date()),
+            direction: '',
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.firstNameChange = this.firstNameChange.bind(this);
@@ -31,6 +35,7 @@ class PersonalData extends React.Component {
         this.universityChange = this.universityChange.bind(this);
         this.departmentChange = this.departmentChange.bind(this);
         this.statusChange = this.statusChange.bind(this);
+        this.handleChangeOnSelect = this.handleChangeOnSelect.bind(this);
 
         this.dispatchData = this.dispatchData.bind(this);
     };
@@ -93,12 +98,27 @@ class PersonalData extends React.Component {
         })
     }
 
+    handleChangeOnSelect( selectedOption ) {
+        if ( selectedOption ) {
+            this.setState({ direction: selectedOption.value })
+        }
+    }
+
     dispatchData() {
         axios.post('https://database-knrtu.firebaseio.com/data.json', this.state )
         store.dispatch(addPersonData(this.state));
     }    
 
     render() {
+
+        const options = [
+            { value: '50 идей', label: '50 идей' },,
+            { value: `Программа "УМНИК"`, label: 'Программа "УМНИК"' }
+          ];
+
+        // TODO: const { lastName, firstName, ... } = this.state;
+        const { direction } = this.state;
+
         return (
             <form className="person" onSubmit={ this.handleSubmit }>
                 <DocGrid cols={3}>
@@ -168,6 +188,22 @@ class PersonalData extends React.Component {
                         </Col>
                     </Row>  
                 </DocGrid>
+
+                <DocGrid cols={1}>
+                    <Row>
+                        <Col>
+                            <Select 
+                                name="select-direction"
+                                options={options} 
+                                className="person__select"
+                                onChange={this.handleChangeOnSelect}
+                            />
+                        </Col>
+                    </Row>
+                </DocGrid>
+
+                { direction === 'Программа "УМНИК"' && <ProgramUMNIK />}
+                { direction === '50 идей' && <FiftyIdeas />}
 
                 <div>
                     <input type="button" value="Сохранить данные участника" onClick={ this.dispatchData } /> 
