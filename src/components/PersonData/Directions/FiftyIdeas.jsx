@@ -171,8 +171,10 @@ class FiftyIdeas extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <small>*Заполняется, если в списке "Провел мероприятие"
-                        <br />не найдено нужное значение</small>
+                        <small className="font-italic">
+                            *Заполняется, если в списке "Провел мероприятие"
+                            <br />не найдено нужное значение
+                        </small>
                     </Col>
                     <Col>
                         <input 

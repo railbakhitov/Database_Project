@@ -32,7 +32,12 @@ class SearchParticipant extends React.Component {
                     Поиск по Фамилии:
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
-                <input type="button" value="Искать" onClick={this.handleClick}/>
+                <button type="button" 
+                        class="btn btn-secondary" 
+                        onClick={this.handleClick}
+                >
+                        Искать
+                </button>
             </form>
         )
     }

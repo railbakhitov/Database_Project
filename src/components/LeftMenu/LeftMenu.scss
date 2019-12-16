@@ -1,6 +1,6 @@
 .leftMenu {
     display: grid;
-    grid-template-rows: 70px 430px 50px;
+    grid-template-rows: 1fr 2fr 1fr;
     background-color: lightblue;
     border: 2px solid black;
     border-right: 0;
@@ -12,6 +12,11 @@
     }
 
     &__button {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Высота footer */
+        height: 30px;
         a {
             font-size: 22px;
             font-weight: 700;;

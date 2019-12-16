@@ -147,7 +147,12 @@ class ProgramUMNIK extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <input type="button" value="Сохранить данные участника" onClick={ this.dispatchData } /> 
+                        <button type="button" 
+                                className="btn btn-success"
+                                onClick={ this.dispatchData }
+                        >
+                            Сохранить данные участника
+                        </button> 
                     </Col>
                     <Col></Col>
                 </Row>
