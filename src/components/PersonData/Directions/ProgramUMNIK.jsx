@@ -1,5 +1,8 @@
 import React from 'react';
 import { DocGrid, Row, Col } from '../../../partials/DocGrid';
+import axios from 'axios';
+import store from '../../../redux/store';
+import addPersonData from '../../../redux/actions/addPersonData';
 
 /* 
 TODO: 1. Название проекта - textArea
@@ -13,7 +16,18 @@ class ProgramUMNIK extends React.Component {
     constructor(props) {
         super(props);
 
+        const { personData } = this.props;
+        const data = Object.keys(personData).filter( name => name !== 'direction')
+                                            .reduce((acc, name) => ({ 
+                                                ...acc, [name]: personData[name]
+                                            }),{});
+
         this.state = {
+            // данные участника
+            data: data,
+            projects: [],
+
+            // Данные для проекта
             projectName: '',
             projectDirection: '',
             projectFinance: '',
@@ -26,6 +40,8 @@ class ProgramUMNIK extends React.Component {
         this.handleChangeProjectFinance = this.handleChangeProjectFinance.bind(this);
         this.handleChangeProjectResult = this.handleChangeProjectResult.bind(this);
         this.handleChangeProjectYear = this.handleChangeProjectYear.bind(this);
+
+        this.dispatchData = this.dispatchData.bind(this);
     }
 
     handleChangeProjectName(e) {
@@ -52,6 +68,25 @@ class ProgramUMNIK extends React.Component {
         const projectYear = e.target.value;
         this.setState({ projectYear });
     }
+
+    dispatchData() {
+        const { projectName, projectDirection, projectFinance, projectResult, projectYear, data } = this.state;
+        const newState = {
+            ...data,
+            projects: [ 
+                ...this.state.projects, 
+                {
+                    projectName,
+                    projectDirection,
+                    projectFinance,
+                    projectResult,
+                    projectYear,
+                }
+            ]
+        };
+        axios.post('https://database-knrtu.firebaseio.com/data.json', newState );
+        store.dispatch(addPersonData( newState ));
+    }  
 
     render() {
         return (
@@ -110,7 +145,15 @@ class ProgramUMNIK extends React.Component {
                             name="projectYear" /> 
                     </Col>
                 </Row>
+                <Row>
+                    <Col>
+                        <input type="button" value="Сохранить данные участника" onClick={ this.dispatchData } /> 
+                    </Col>
+                    <Col></Col>
+                </Row>
             </DocGrid>
+            
+
         )
     }
 }

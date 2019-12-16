@@ -1,5 +1,6 @@
 import React from 'react';
 import store from '../../../redux/store';
+import '../LeftMenu.scss';
 
 class SearchParticipant extends React.Component {
     constructor(props) {
@@ -26,9 +27,9 @@ class SearchParticipant extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="leftMenu__nav" onSubmit={this.handleSubmit}>
                 <label>
-                    Имя:
+                    Поиск по Фамилии:
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
                 </label>
                 <input type="button" value="Искать" onClick={this.handleClick}/>

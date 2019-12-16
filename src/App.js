@@ -23,7 +23,6 @@ class App extends React.Component {
     }
 
     render() {
-        console.log('gjdfng', this.props.currentID);
         return (
             <div className="wrapper">
                 <LeftMenu />

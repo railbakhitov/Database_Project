@@ -2,10 +2,7 @@ import './Person.scss';
 import React from 'react';
 import formatDate from '../../utils/formatDate';
 import { DocGrid, Row, Col } from '../../partials/DocGrid';
-import store from '../../redux/store';
-import addPersonData from '../../redux/actions/addPersonData';
 import Select from 'react-select';
-import axios from 'axios';
 import ProgramUMNIK from './Directions/ProgramUMNIK';
 import FiftyIdeas from './Directions/FiftyIdeas';
 
@@ -25,6 +22,7 @@ class PersonalData extends React.Component {
             dateRegistration: formatDate(new Date()),
             direction: '',
         };
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.firstNameChange = this.firstNameChange.bind(this);
         this.lastNameChange = this.lastNameChange.bind(this);
@@ -37,7 +35,6 @@ class PersonalData extends React.Component {
         this.statusChange = this.statusChange.bind(this);
         this.handleChangeOnSelect = this.handleChangeOnSelect.bind(this);
 
-        this.dispatchData = this.dispatchData.bind(this);
     };
 
     handleSubmit(e) {
@@ -103,11 +100,7 @@ class PersonalData extends React.Component {
             this.setState({ direction: selectedOption.value })
         }
     }
-
-    dispatchData() {
-        axios.post('https://database-knrtu.firebaseio.com/data.json', this.state )
-        store.dispatch(addPersonData(this.state));
-    }    
+  
 
     render() {
 
@@ -202,12 +195,8 @@ class PersonalData extends React.Component {
                     </Row>
                 </DocGrid>
 
-                { direction === 'Программа "УМНИК"' && <ProgramUMNIK />}
-                { direction === '50 идей' && <FiftyIdeas />}
-
-                <div>
-                    <input type="button" value="Сохранить данные участника" onClick={ this.dispatchData } /> 
-                </div>
+                { direction === 'Программа "УМНИК"' && <ProgramUMNIK personData={ this.state } /> }
+                { direction === '50 идей' && <FiftyIdeas personData={ this.state }/> }
 
             </form>
         )

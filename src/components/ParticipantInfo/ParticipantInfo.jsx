@@ -16,10 +16,18 @@ class ParticipantInfo extends React.Component {
 
     render() {
         const { currentID, data } = this.props;
+
+        // TODD: менять значение isDisabled по нажатию кнопки, изменить данные
+        const isDisabled = true;
+
         // TODO: упросить запись снизу
         let personData = data.filter(person => Object.keys(person).join() === currentID);
             personData = personData.slice().shift();
             personData = Object.values(personData).slice().shift();
+
+            
+        let { projects = [] } = personData;
+              projects = projects.slice().shift() || {};
 
         return (
             <form className="person" onSubmit={ this.handleSubmit }>
@@ -27,15 +35,15 @@ class ParticipantInfo extends React.Component {
                     <Row>
                         <Col style={{ paddingLeft: "30px" }}>
                             <label>Фамилия</label> 
-                            <input type="text" value={ personData.lastName } name="lastName" />    
+                            <input type="text" disabled={isDisabled} value={ personData.lastName } name="lastName" />    
                         </Col>
                         <Col style={{ paddingLeft: "30px" }}>
                             <label>Имя</label>
-                            <input type="text" value={ personData.firstName } name="firstName" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.firstName } name="firstName" /> 
                         </Col>
                         <Col style={{ paddingLeft: "30px" }}>
                             <label>Отчество</label>
-                            <input type="text" value={ personData.middleName } name="middleName" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.middleName } name="middleName" /> 
                         </Col>
                     </Row>
                 </DocGrid> 
@@ -46,7 +54,7 @@ class ParticipantInfo extends React.Component {
                             <label>Контактный телефон</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.telephone } name="telephone" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.telephone } name="telephone" /> 
                         </Col>      
                     </Row>
                     <Row>
@@ -54,7 +62,7 @@ class ParticipantInfo extends React.Component {
                             <label>Должность</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.position } name="position" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.position } name="position" /> 
                         </Col>
                     </Row>    
                     <Row>
@@ -62,7 +70,7 @@ class ParticipantInfo extends React.Component {
                             <label>Электронная почта</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.email } name="email" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.email } name="email" /> 
                         </Col>
                     </Row>    
                     <Row>
@@ -70,7 +78,7 @@ class ParticipantInfo extends React.Component {
                             <label>Университет</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.university } name="university" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.university } name="university" /> 
                         </Col>
                     </Row>    
                     <Row>
@@ -78,7 +86,7 @@ class ParticipantInfo extends React.Component {
                             <label>Кафедра</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.department } name="department" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.department } name="department" /> 
                         </Col>
                     </Row>    
                     <Row>
@@ -86,7 +94,7 @@ class ParticipantInfo extends React.Component {
                             <label>Статус</label>
                         </Col>
                         <Col>
-                            <input type="text" value={ personData.status } name="status" /> 
+                            <input type="text" disabled={isDisabled} value={ personData.status } name="status" /> 
                         </Col>
                     </Row>  
                 </DocGrid>
@@ -96,13 +104,71 @@ class ParticipantInfo extends React.Component {
                         <Col>
                             <Select 
                                 name="select-direction"
+                                isDisabled={isDisabled}
                                 /* options={options}  */
                                 className="person__select"
-                                value={ personData.direction }
+                                value={ projects.directionName }
                             />
                         </Col>
                     </Row>
                 </DocGrid>
+
+                <DocGrid cols={2}>
+                <Row>
+                    <Col>Название проекта</Col>
+                    <Col>
+                        <textarea 
+                            type="text" 
+                            cols="60"
+                            rows="4"
+                            disabled={isDisabled}
+                            value={ projects.projectName } 
+                            name="projectName" /> 
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>Направление</Col>
+                    <Col>
+                        <textarea 
+                            type="text" 
+                            cols="60"
+                            rows="4"
+                            disabled={isDisabled}
+                            value={ projects.projectDirection } 
+                            name="projectDirection" /> 
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>Финансы</Col>
+                    <Col>
+                        <input 
+                            type="text" 
+                            disabled={isDisabled}
+                            value={ projects.projectFinance } 
+                            name="projectFinance" /> 
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>Результат</Col>
+                    <Col>
+                        <input 
+                            type="text" 
+                            disabled={isDisabled}
+                            value={ projects.projectResult } 
+                            name="projectResult" /> 
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>Год проведения</Col>
+                    <Col>
+                        <input 
+                            type="text" 
+                            disabled={isDisabled}
+                            value={ projects.projectYear } 
+                            name="projectYear" /> 
+                    </Col>
+                </Row>
+            </DocGrid>
 
             </form>
         )
@@ -111,7 +177,6 @@ class ParticipantInfo extends React.Component {
 
 function msp(state) {
     const {personData, currentParticipant} = state;
-    console.log(personData, currentParticipant);
     return {
         'data': personData,
         'currentID': currentParticipant
