@@ -1,5 +1,6 @@
 import React from 'react';
 import { DocGrid, Row, Col } from '../../../partials/DocGrid';
+import { whoHoldEvent } from '../../../dictionaries/whoHoldEvent'
 import Select from 'react-select';
 
 /* 
@@ -17,10 +18,6 @@ TODO: 1. Год проведения
 
 */
 
-const persons = [
-    { value: 'КНИТУ-КХТИ', label: 'КНИТУ-КХТИ' }
-  ];
-
 class FiftyIdeas extends React.Component {
     constructor(props) {
         super(props);
@@ -33,6 +30,8 @@ class FiftyIdeas extends React.Component {
             projectResult: '',
             projectNote: '',
             whoHoldEvent: '',
+            // если whoHoldEventDifferent !== '', 
+            // то whoHoldEvent.push({ value: `${whoHoldEventDifferent}`, label: `${whoHoldEventDifferent}` })
             whoHoldEventDifferent: '', 
         }
 
@@ -42,6 +41,7 @@ class FiftyIdeas extends React.Component {
         this.handleChangeRequestNumber = this.handleChangeRequestNumber.bind(this);
         this.handleChangeProjectResult = this.handleChangeProjectResult.bind(this);
         this.handleChangeProjectNote = this.handleChangeProjectNote.bind(this);
+
         this.handleChangeWhoHoldEvent = this.handleChangeWhoHoldEvent.bind(this);
         this.handleChangeWhoHoldEventDifferent = this.handleChangeWhoHoldEventDifferent.bind(this);
         
@@ -163,7 +163,7 @@ class FiftyIdeas extends React.Component {
                     <Col>
                         <Select 
                             name="select-person"
-                            options={persons} 
+                            options={whoHoldEvent} 
                             className="select"
                             onChange={this.handleChangeWhoHoldEvent}
                         />
