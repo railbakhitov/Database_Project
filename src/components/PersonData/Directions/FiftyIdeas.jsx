@@ -2,6 +2,9 @@ import React from 'react';
 import { DocGrid, Row, Col } from '../../../partials/DocGrid';
 import { whoHoldEvent } from '../../../dictionaries/whoHoldEvent'
 import Select from 'react-select';
+import axios from 'axios';
+import store from '../../../redux/store';
+import addPersonData from '../../../redux/actions/addPersonData';
 
 /* 
 TODO: 1. Год проведения
@@ -22,7 +25,17 @@ class FiftyIdeas extends React.Component {
     constructor(props) {
         super(props);
 
+        const { personData } = this.props;
+        const data = Object.keys(personData).filter( name => name !== 'direction')
+                                            .reduce((acc, name) => ({ 
+                                                ...acc, [name]: personData[name]
+                                            }),{});
+
         this.state = {
+            data: data,
+            projects: [],
+
+            direction: personData.direction,
             projectYear: '',
             projectName: '',
             projectDirection: '',   
@@ -44,6 +57,8 @@ class FiftyIdeas extends React.Component {
 
         this.handleChangeWhoHoldEvent = this.handleChangeWhoHoldEvent.bind(this);
         this.handleChangeWhoHoldEventDifferent = this.handleChangeWhoHoldEventDifferent.bind(this);
+
+        this.dispatchData = this.dispatchData.bind(this);
         
     }
 
@@ -73,8 +88,8 @@ class FiftyIdeas extends React.Component {
     }
 
     handleChangeProjectNote(e) {
-        const projectResult = e.target.value;
-        this.setState({ projectResult });
+        const projectNote = e.target.value;
+        this.setState({ projectNote });
     }
 
     handleChangeWhoHoldEvent( selectedOptions ) {
@@ -87,6 +102,30 @@ class FiftyIdeas extends React.Component {
         const whoHoldEventDifferent = e.target.value;
         this.setState({ whoHoldEventDifferent });
     }
+
+    dispatchData() {
+        const { projectYear, projectName, projectDirection, requestNumber, projectResult, projectNote, whoHoldEvent, whoHoldEventDifferent, data, projects, direction } = this.state;
+        const newState = {
+            ...data,
+            projects: [ 
+                ...projects, 
+                {
+                    direction,
+                    projectYear,
+                    projectName,
+                    projectDirection,
+                    requestNumber,
+                    projectResult,
+                    projectNote,
+                    whoHoldEvent,
+                    whoHoldEventDifferent
+                }
+            ]
+        };
+        axios.post('https://database-knrtu.firebaseio.com/data.json', newState );
+        store.dispatch(addPersonData( newState ));
+        window.location.reload();
+    }  
 
     render() {
 
@@ -183,6 +222,17 @@ class FiftyIdeas extends React.Component {
                             onChange={ this.handleChangeWhoHoldEventDifferent } 
                             name="whoHoldEventDifferent" /> 
                     </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <button type="button" 
+                                className="btn btn-success"
+                                onClick={ this.dispatchData }
+                        >
+                            Сохранить данные участника
+                        </button> 
+                    </Col>
+                    <Col></Col>
                 </Row>
 
             </DocGrid>

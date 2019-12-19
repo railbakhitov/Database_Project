@@ -28,6 +28,7 @@ class ProgramUMNIK extends React.Component {
             projects: [],
 
             // Данные для проекта
+            direction: personData.direction,
             projectName: '',
             projectDirection: '',
             projectFinance: '',
@@ -70,12 +71,13 @@ class ProgramUMNIK extends React.Component {
     }
 
     dispatchData() {
-        const { projectName, projectDirection, projectFinance, projectResult, projectYear, data } = this.state;
+        const { projectName, projectDirection, projectFinance, projectResult, projectYear, data, projects, direction } = this.state;
         const newState = {
             ...data,
             projects: [ 
-                ...this.state.projects, 
+                ...projects, 
                 {
+                    direction,
                     projectName,
                     projectDirection,
                     projectFinance,
@@ -86,6 +88,7 @@ class ProgramUMNIK extends React.Component {
         };
         axios.post('https://database-knrtu.firebaseio.com/data.json', newState );
         store.dispatch(addPersonData( newState ));
+        window.location.reload();
     }  
 
     render() {
